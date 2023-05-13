@@ -8,4 +8,16 @@ class Book < ApplicationRecord
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
+
+  def self.search(word, method)
+    if method == "完全一致"
+      where(title: word)
+    elsif method == "前方一致"
+      where("title LIKE ?", "#{word}%")
+    elsif method == "後方一致"
+      where("title LIKE ?", "%#{word}")
+    else
+      where("title LIKE ?", "%#{word}%")
+    end
+  end
 end
