@@ -22,12 +22,17 @@
   </tr>
   <tr>
   <% unless user == current_user %>
-    <th colspan="2">
+    <th>
       <% if current_user.following?(user) %>
-        <%= link_to "フォローを外す", relationship_path(current_user.active_relationships.find_by(followed_id: user.id)), method: :delete, class: "btn btn-success" %>
+        <%= link_to "フォロー外す", relationship_path(current_user.active_relationships.find_by(followed_id: user.id)), method: :delete, class: "btn btn-success btn-small px-1" %>
       <% else %>
-        <%= link_to "フォローする", relationships_path(follower_id: current_user.id, followed_id: user.id), method: :post, class: "btn btn-success" %>
+        <%= link_to "フォローする", relationships_path(follower_id: current_user.id, followed_id: user.id), method: :post, class: "btn btn-success btn-small px-1" %>
       <% end %>
+    </th>
+    <th>
+    <% if current_user.following?(user) && user.following?(current_user) %>
+      <%= link_to 'chatを始める', user_direct_messages_path(user_id: user.id), class: "small" %>
+    <% end %>
     </th>
   <% end %>
   </tr>

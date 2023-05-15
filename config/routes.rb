@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'direct_messages/index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users
 
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
     member do
       get :following, :followers
     end
+    resources :direct_messages, only: [:index, :create]
   end
   resources :relationships, only: [:create, :destroy]
 end

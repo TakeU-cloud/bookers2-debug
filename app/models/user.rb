@@ -12,6 +12,9 @@ class User < ApplicationRecord
   has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'followed_id', dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  # N:N relations of direct messages between user_a and user_b
+  has_many :sent_messages, class_name: 'DirectMessage', foreign_key: 'sender_id', dependent: :destroy
+  has_many :received_messages, class_name: 'DirectMessage', foreign_key: 'receiver_id', dependent: :destroy
 
   has_one_attached :profile_image
 

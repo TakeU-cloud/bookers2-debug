@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_13_100905) do
+ActiveRecord::Schema.define(version: 2023_05_15_050056) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -54,6 +54,16 @@ ActiveRecord::Schema.define(version: 2023_05_13_100905) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "views_count", default: 0
+  end
+
+  create_table "direct_messages", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sender_id", "receiver_id"], name: "index_direct_messages_on_sender_id_and_receiver_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -87,6 +97,8 @@ ActiveRecord::Schema.define(version: 2023_05_13_100905) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "direct_messages", "users", column: "receiver_id", on_delete: :cascade
+  add_foreign_key "direct_messages", "users", column: "sender_id", on_delete: :cascade
   add_foreign_key "relationships", "users", column: "followed_id", on_delete: :cascade
   add_foreign_key "relationships", "users", column: "follower_id", on_delete: :cascade
 end

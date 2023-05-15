@@ -1,2 +1,7 @@
 @use "~bootstrap/scss/bootstrap";
 @use '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+.btn-small {
+  font-size: 13px;
+  font-weight: normal;
+}

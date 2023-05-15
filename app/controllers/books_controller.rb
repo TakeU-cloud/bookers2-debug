@@ -4,11 +4,15 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @book_comment = BookComment.new
+    @book.update(views_count: @book.views_count + 1)
   end
 
   def index
-    @books = Book.all
     @book = Book.new
+    @books = Book.left_joins(:favorites)
+                 .select("books.*, SUM(CASE WHEN favorites.created_at BETWEEN '#{1.week.ago}' AND '#{Time.now}' THEN 1 ELSE 0 END) AS weekly_favorites_count")
+                 .group('books.id')
+                 .order('weekly_favorites_count DESC')
   end
 
   def create
