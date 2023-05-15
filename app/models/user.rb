@@ -48,4 +48,28 @@ class User < ApplicationRecord
       where("name LIKE ?", "%#{word}%")
     end
   end
+
+  def today_books
+    self.books.where(created_at: Time.zone.now.all_day)
+  end
+
+  def yesterday_books
+    self.books.where(created_at: 1.day.ago.all_day)
+  end
+
+  def this_week_books
+    self.books.where(created_at: Time.zone.now.all_week)
+  end
+
+  def last_week_books
+    self.books.where(created_at: 1.week.ago.all_week)
+  end
+
+  def percent_increase(current_period, last_period)
+    if last_period.count == 0
+      100
+    else
+      (((current_period.count - last_period.count) / last_period.count.to_f) * 100).round
+    end
+  end
 end

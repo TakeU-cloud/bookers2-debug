@@ -5,6 +5,22 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
+    @today = Date.today
+    @daily_books = (0..6).map do |days_ago|
+      date = @today - days_ago
+      books_count = @books.where(created_at: date.all_day).count
+      [date, books_count]
+    end.to_h
+    if params[:date]
+      @books_count = @user.books.where(created_at: params[:date].to_date.all_day).count
+    else
+      @books_count = 0
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def index
