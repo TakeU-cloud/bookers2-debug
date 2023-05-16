@@ -1,0 +1,26 @@
+<table class='table'>
+  <thead>
+    <tr>
+      <th></th>
+      <th class="small">グループ名</th>
+      <th class="small">紹介文</th></th>
+      <th class="small">メンバー数</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% groups.each do |group| %>
+      <tr>
+        <td><%= image_tag group.get_group_image, size: '50x50' %></td>
+        <td><%= link_to "#{group.name}", group_path(group.id) %></td>
+        <td><%= group.introduction %></td>
+        <td><%= group.users.count + 1 %></td>
+        <td>
+        <% if group.owner == current_user %>
+          <%= link_to 'Edit', edit_group_path(group.id), class: "btn btn-success py-1" %>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

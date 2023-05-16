@@ -15,6 +15,10 @@ class User < ApplicationRecord
   # N:N relations of direct messages between user_a and user_b
   has_many :sent_messages, class_name: 'DirectMessage', foreign_key: 'sender_id', dependent: :destroy
   has_many :received_messages, class_name: 'DirectMessage', foreign_key: 'receiver_id', dependent: :destroy
+  # N:N relations between user_a and user_b through group_users
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
+  has_many :owned_groups, class_name: 'Group', foreign_key: 'owner_id'
 
   has_one_attached :profile_image
 

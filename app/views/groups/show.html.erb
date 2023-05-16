@@ -1,0 +1,72 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-3'>
+      <h2>User info</h2>
+      <%= render 'users/info', user: @user %>
+      <h2 class="mt-3">New book</h2>
+      <%= render 'books/form', book: @book %>
+    </div>
+    <div class='col-md-8 offset-md-1'>
+  		<h2>Group detail</h2>
+  		<table class='table'>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="small">グループ名</th>
+            <th class="small">紹介文</th></th>
+            <th class="small">メンバー</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+  		  <tbody>
+          <tr>
+            <td><%= image_tag @group.get_group_image, size: '50x50' %></td>
+            <td><%= @group.name %></td>
+            <td><%= @group.introduction %></td>
+            <td>
+              <%= @group.owner.name %>
+            <% @group.users.each do |user| %>
+              <%= user.name %>
+            <% end %>
+            </td>
+            <td>
+            <% if @group.owner == current_user %>
+              <%= link_to 'Edit', edit_group_path(@group.id), class: "btn btn-success py-1" %>
+            <% else %>
+              <% if current_user.groups.include?(@group) %>
+                <%= link_to 'Leave', group_group_users_path(@group.id), method: :delete ,class: "btn btn-danger py-1" %>
+              <% else %>
+                <%= link_to 'Join', group_group_users_path(@group.id), method: :post ,class: "btn btn-success py-1" %>
+              <% end %>
+            <% end %>
+            </td>
+            <td>
+            <% if @group.owner == current_user %>
+              <%= link_to 'Notice an Event', new_group_group_message_path(@group.id), class: "btn btn-success py-1 text-nowrap" %>
+            <% end %>
+            </td>
+          </tr>
+  		  </tbody>
+      </table>
+    <% if current_user == @group.owner || @group.users.include?(current_user) %>
+      <h2>Message from owner</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Content</th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          <% @group.group_messages.order(created_at: :desc).each do |message| %>
+            <td><%= message.title %></td>
+            <td><%= message.content %></td>
+          <% end %>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+    </div>
+  </div>
+</div>
