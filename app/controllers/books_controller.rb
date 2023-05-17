@@ -9,10 +9,21 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new
-    @books = Book.left_joins(:favorites)
-                 .select("books.*, SUM(CASE WHEN favorites.created_at BETWEEN '#{1.week.ago}' AND '#{Time.now}' THEN 1 ELSE 0 END) AS weekly_favorites_count")
-                 .group('books.id')
-                 .order('weekly_favorites_count DESC')
+
+    session[:sort] = params[:sort] if params[:sort].present?
+    session[:sort] = 'created_at' if session[:sort].blank?
+    if session[:sort] == 'newest'
+      @sort = 'created_at'
+      @books = Book.order(@sort => :desc).all
+    elsif session[:sort] == 'highest'
+      @sort = 'score'
+      @books = Book.order(@sort => :desc).all
+    else
+      @books = Book.left_joins(:favorites)
+                   .select("books.*, SUM(CASE WHEN favorites.created_at BETWEEN '#{1.week.ago}' AND '#{Time.now}' THEN 1 ELSE 0 END) AS weekly_favorites_count")
+                   .group('books.id')
+                   .order('weekly_favorites_count DESC')
+    end
   end
 
   def create
@@ -48,7 +59,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :score, :tag)
   end
 
   def ensure_correct_user

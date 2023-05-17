@@ -13,6 +13,15 @@ import "bootstrap";
 import '@fortawesome/fontawesome-free/js/all';
 import "../stylesheets/application";
 import Chart from 'chart.js/auto';
+import Raty from 'raty.js';
+
+// 今回、html.erbファイル内に<script></script>で直接Ratyを表示する想定のため、
+// Javascriptの読み込み順の問題で、この場所でRatyを初期化しておく必要がある
+window.raty = function(elem,opt) {
+  let raty =  new Raty(elem,opt)
+  raty.init();
+  return raty;
+};
 
 Rails.start();
 Turbolinks.start();
@@ -24,26 +33,38 @@ document.addEventListener('turbolinks:load', () => {
     window.myBooksChart.destroy();
   }
 
-  const ctx = document.getElementById('myChart').getContext('2d');
-  window.myBooksChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
-      datasets: [{
-        label: '投稿した本の数',
-        data: JSON.parse(ctx.canvas.dataset.books),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-        tension: 0.4
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+  if ( document.getElementById('myChart') ) {
+    const ctx = document.getElementById('myChart').getContext('2d');
+    window.myBooksChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+        datasets: [{
+          label: '投稿した本の数',
+          data: JSON.parse(ctx.canvas.dataset.books),
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          tension: 0.4
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
         }
       }
-    }
-  });
+    });
+  }
+
+  let elem;
+  let elems;
+  let score;
+  let opt;
+  let readOnly;
+
 });

@@ -3,5 +3,5 @@
   <%= render 'users/index',users: @results %>
 <% else %>
   <h2>Books search for <%= @search_word %></h2>
-  <%= render 'books/index', path: 'books/favorite', books: @results %>
+  <%= render 'books/index', books: @results %>
 <% end %>

@@ -3,8 +3,21 @@
     <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
       <%= render 'layouts/errors', obj: @book %>
   		<h1>Editing Book</h1>
-  		<%= render 'form', book: @book %>
+  		<%= render 'form', readOnly: true, book: @book %>
   		<%= link_to 'Show', @book %> |
   		<%= link_to 'Back', books_path, class: "back" %>
   </div>
 </div>
+<script>
+  elem = document.querySelector('#post_raty');
+  elem.innerHTML = '';
+  score = Number(elem.dataset.score);
+  opt = {
+    readOnly: true,
+    starOff:  '<%= asset_path('star-off.png') %>',
+    starOn : '<%= asset_path('star-on.png') %>',
+    score: score,
+    half: false,
+  };
+  raty(elem,opt);
+</script>

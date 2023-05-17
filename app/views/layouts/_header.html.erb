@@ -56,12 +56,17 @@
   </nav>
   <% if user_signed_in? %>
   <div class="container mt-1">
-    <div class="row col-6 mx-auto">
+    <div class="row col-8 mx-auto">
       <%= form_with url: search_path, method: :get, local: true do |f| %>
         <%= f.text_field :search_word %>
         <%= f.select :search_target, [ "users", "books" ] %>
         <%= f.select :search_method, [ "完全一致", "前方一致", "後方一致", "部分一致" ] %>
         <%= f.submit "検索", class: "btn btn-secondary btn-small py-0" %>
+      <% end %>
+      <span class="ml-2"></span>
+      <%= form_with url: tag_search_path, method: :get, local: true do |f| %>
+        <%= f.text_field :tag %>
+        <%= f.submit "タグ検索", class: "btn btn-secondary btn-small py-0" %>
       <% end %>
     </div>
   </div>

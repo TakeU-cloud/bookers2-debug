@@ -4,7 +4,7 @@
       <h2>User info</h2>
       <%= render 'users/info', user: @book.user %>
       <h2 class="mt-3">New book</h2>
-      <%= render 'form', book: Book.new %>
+      <%= render 'form', readOnly: false, book: Book.new %>
     </div>
     <div class='col-md-8 offset-md-1'>
   		<h2>Book detail</h2>
@@ -25,6 +25,9 @@
           </td>
           <td>
             <span class="small">閲覧数:</span><span><%= @book.views_count %></span>
+          </td>
+          <td class="text-nowrap">
+            <div class="display_raty" data-score="<%= @book.score %>"></div>
           </td>
         <% if @book.user == current_user %>
           <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
@@ -47,3 +50,17 @@
     </div>
   </div>
 </div>
+<script>
+  elem = document.querySelector('.display_raty');
+  elem.innerHTML = '';
+  score = Number(elem.dataset.score);
+  opt = {
+    readOnly: true,
+    starOff:  '<%= asset_path('star-off.png') %>',
+    starOn : '<%= asset_path('star-on.png') %>',
+    score: score,
+    half: false,
+  };
+  raty.destroy;
+  raty(elem,opt);
+</script>
