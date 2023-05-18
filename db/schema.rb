@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 2023_05_17_024653) do
 
   create_table "book_comments", force: :cascade do |t|
     t.text "comment"
-    t.integer "user_id"
-    t.integer "book_id"
+    t.bigint "user_id"
+    t.bigint "book_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2023_05_17_024653) do
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "views_count", default: 0
@@ -60,23 +60,24 @@ ActiveRecord::Schema.define(version: 2023_05_17_024653) do
   end
 
   create_table "direct_messages", force: :cascade do |t|
-    t.integer "sender_id"
-    t.integer "receiver_id"
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["sender_id", "receiver_id"], name: "index_direct_messages_on_sender_id_and_receiver_id"
+    t.index ["receiver_id"], name: "index_direct_messages_on_receiver_id"
+    t.index ["sender_id"], name: "index_direct_messages_on_sender_id"
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "book_id"
+    t.bigint "user_id"
+    t.bigint "book_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "group_messages", force: :cascade do |t|
-    t.integer "group_id", null: false
+    t.bigint "group_id", null: false
     t.string "title"
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
@@ -85,8 +86,8 @@ ActiveRecord::Schema.define(version: 2023_05_17_024653) do
   end
 
   create_table "group_users", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "group_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_group_users_on_group_id"
@@ -96,18 +97,19 @@ ActiveRecord::Schema.define(version: 2023_05_17_024653) do
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.text "introduction"
-    t.integer "owner_id", null: false
+    t.bigint "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
   create_table "relationships", force: :cascade do |t|
-    t.integer "follower_id"
-    t.integer "followed_id"
+    t.bigint "follower_id", null: false
+    t.bigint "followed_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -126,12 +128,12 @@ ActiveRecord::Schema.define(version: 2023_05_17_024653) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "direct_messages", "users", column: "receiver_id", on_delete: :cascade
-  add_foreign_key "direct_messages", "users", column: "sender_id", on_delete: :cascade
+  add_foreign_key "direct_messages", "receivers"
+  add_foreign_key "direct_messages", "senders"
   add_foreign_key "group_messages", "groups"
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
   add_foreign_key "groups", "users", column: "owner_id"
-  add_foreign_key "relationships", "users", column: "followed_id", on_delete: :cascade
-  add_foreign_key "relationships", "users", column: "follower_id", on_delete: :cascade
+  add_foreign_key "relationships", "followeds"
+  add_foreign_key "relationships", "followers"
 end
