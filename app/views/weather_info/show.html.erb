@@ -1,0 +1,20 @@
+<div class="container text-center">
+  <%= form_with url: weather_info_show_path, method: :get, local: true do |form| %>
+    <%= form.label :city_name, '都市名' %>
+    <%= form.text_field :city_name %>
+    <%= form.submit '検索' %>
+  <% end %>
+
+  <% if @weather_info.present? %>
+    <div>
+      <h2>場所： <%= @weather_info[:place] %></h2>
+      <h2>最高気温： <%= @weather_info[:temp_max] %></h2>
+      <h2>最低気温： <%= @weather_info[:temp_min] %></h2>
+      <h2>湿度： <%= @weather_info[:humidity] %></h2>
+      <h2>風速： <%= @weather_info[:speed] %></h2>
+      <h2>天気： <img src="<%= @weather_info[:icon_url] %>" alt="weather icon"></h2>
+    </div>
+  <% elsif @error_message.present? %>
+    <p><%= @error_message %></p>
+  <% end %>
+</div>

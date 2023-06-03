@@ -101,6 +101,10 @@ GEM
       railties (>= 5.0.0)
     faker (2.23.0)
       i18n (>= 1.8.11, < 2)
+    faraday (2.7.5)
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -210,6 +214,7 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.1)
+    ruby2_keywords (0.0.5)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -269,6 +274,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  faraday
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mysql2

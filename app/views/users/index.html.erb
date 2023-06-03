@@ -12,6 +12,8 @@
       <%= link_to "グループを作成する", new_group_path, class: "small" %>
       <span> | </span>
       <%= link_to "グループ一覧", groups_path, class: "small" %>
+      <span> | </span>
+      <%= link_to "天気情報", weather_info_show_path, class: "small" %>
       <%= render 'index',users: @users %>
     </div>
   </div>

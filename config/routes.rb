@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  get 'weather_info/show'
   get 'group_messages/new'
   get 'group_messages/create'
   get 'group_messages/show'
   get 'direct_messages/index'
+  get 'weather_info/show'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users
 
