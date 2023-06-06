@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_17_024653) do
+ActiveRecord::Schema.define(version: 2023_06_03_145807) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -57,6 +57,9 @@ ActiveRecord::Schema.define(version: 2023_05_17_024653) do
     t.integer "views_count", default: 0
     t.integer "score", default: 0, null: false
     t.string "tag"
+    t.string "address"
+    t.float "latitude"
+    t.float "longitude"
   end
 
   create_table "direct_messages", force: :cascade do |t|

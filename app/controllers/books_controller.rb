@@ -24,6 +24,7 @@ class BooksController < ApplicationController
                    .group('books.id')
                    .order('weekly_favorites_count DESC')
     end
+    @nearby_books = Book.nearby_books(@book.latitude, @book.longitude)
   end
 
   def create
@@ -33,17 +34,19 @@ class BooksController < ApplicationController
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @books = Book.all
+      @nearby_books = Book.nearby_books(@book.latitude, @book.longitude)
       render 'index'
     end
   end
 
   def edit
     @book = Book.find(params[:id])
+    @nearby_books = Book.nearby_books(@book.latitude, @book.longitude)
   end
 
   def update
-    binding.pry
     @book = Book.find(params[:id])
+    @nearby_books = Book.nearby_books(@book.latitude, @book.longitude)
     if @book.update(book_params)
       redirect_to book_path(@book), notice: "You have updated book successfully."
     else
@@ -60,7 +63,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :score, :tag)
+    params.require(:book).permit(:title, :body, :score, :tag, :address, :latitude, :longitude)
   end
 
   def ensure_correct_user

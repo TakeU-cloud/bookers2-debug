@@ -17,8 +17,17 @@
     <%= f.hidden_field :score, id: "score_field" %>
   </div>
   <div class="form-group">
+    <%= f.label :address %>
+    <%= f.text_field :address, id: 'book_address', class: 'form-control' %>
+    <%= f.hidden_field :latitude, id: 'book_latitude' %>
+    <%= f.hidden_field :longitude, id: 'book_longitude' %>
+  </div>
+  <div id="nearby_books" data-books='<%= @nearby_books.to_json(only: [:title, :latitude, :longitude], methods: :book_url) %>'></div>
+  <div id="map" style="width: 100%; height: 400px;"></div>
+  <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>
   </div>
+  <%= javascript_pack_tag 'map', async: false %>
 <% end %>
 <script>
   elem = document.querySelector('#post_raty');

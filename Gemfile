@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
-gem "net-smtp"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4'
 # Use sqlite3 as the database for Active Record
@@ -67,5 +66,8 @@ gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
 gem "faraday"
+
+# geocoderを導入して、bookモデルに住所を追加する
+gem 'geocoder'
 
 
