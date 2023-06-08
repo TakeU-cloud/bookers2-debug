@@ -1,24 +1,23 @@
 Rails.application.routes.draw do
-  get 'weather_info/show'
-  get 'group_messages/new'
-  get 'group_messages/create'
-  get 'group_messages/show'
-  get 'direct_messages/index'
-  get 'weather_info/show'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  devise_for :users
-
   root :to =>"homes#top"
   get "home/about"=>"homes#about"
+  # devise関連のルーティングは、他のルーティングよりも前に記述する必要がある（競合を避けるため）
+  # usersのdevise routes
+  devise_for :users
+  # userにゲストログイン機能を追加するためのルーティング
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+  end
+  # adminsのdevise routes
+  devise_for :admins, skip: :registrations
 
-  get "search"=>'searches#search'
-  # タグ検索も検索のカテゴリ選択に含めれば良さそうだが、今回は教材の見た目通りに実装する
-  get "tag_search"=>'tag_searches#search'
-
+  # 本関連のルーティング
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update] do
     resource :favorites, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
   end
+
+  # ユーザー関連のルーティング
   resources :users, only: [:index,:show,:edit,:update] do
     member do
       get :following, :followers
@@ -30,7 +29,16 @@ Rails.application.routes.draw do
     resource :group_users, only: [:create, :destroy]
     resources :group_messages, only: [:new, :create, :show, :index]
   end
-  devise_scope :user do
-    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+  # お天気情報のルーティング
+  get 'weather_info/show'
+  get "search"=>'searches#search'
+  # タグ検索も検索のカテゴリ選択に含めれば良さそうだが、今回は教材の見た目通りに実装する
+  get "tag_search"=>'tag_searches#search'
+
+  # 管理者関連のルーティング
+  namespace :admins do
+    get 'dashboard', to: 'admins#dashboard'
+    get 'users', to: 'admins#users'
+    resources :admins, only: [:new, :create, :destroy]
   end
 end
