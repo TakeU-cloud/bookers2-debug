@@ -14,3 +14,45 @@
     </span>
   </div>
 <% end %>
+<canvas id="myCommentsChart" data-bookcomments="<%= @daily_book_comments.values.reverse.to_json %>"></canvas>
+
+<script>
+document.addEventListener('turbolinks:load', () => {
+  const data = JSON.parse(document.getElementById('myCommentsChart').dataset.bookcomments);
+  window.initializeOrUpdateChart(data);
+});
+
+window.initializeOrUpdateChart = function(data) {
+  if (window.myBookCommentsChart) {
+    window.myBookCommentsChart.destroy();
+  }
+
+  if ( document.getElementById('myCommentsChart') ) {
+    const ctx = document.getElementById('myCommentsChart').getContext('2d');
+    window.myBookCommentsChart = new window.Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+        datasets: [{
+          label: '投稿したコメント数',
+          data: data,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          tension: 0.4
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      }
+    });
+  }
+}
+</script>

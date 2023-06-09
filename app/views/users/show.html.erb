@@ -65,7 +65,7 @@
       </table>
       <canvas id="myChart" data-books="<%= @daily_books.values.reverse.to_json %>"></canvas>
       <%= form_with url: user_path(@user), method: :get, local: false, class: "mt-3" do |f| %>
-        <%= f.date_field :date %>
+        <%= f.date_field :date, required: true %>
         <%= f.submit "検索" %>
       <% end %>
       <table class='table table-bordered mt-2'>

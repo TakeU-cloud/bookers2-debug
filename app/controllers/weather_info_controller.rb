@@ -26,6 +26,10 @@ class WeatherInfoController < ApplicationController
         @error_message = "Connection failed: #{e.message}"
       rescue JSON::ParserError => e
         @error_message = "Parsing failed: #{e.message}"
+      rescue URI::InvalidURIError => e
+        @error_message = "Invalid URI: #{e.message}"
+      rescue Faraday::ClientError => e
+        @error_message = "Client error: #{e.message}"
       end
     end
   end

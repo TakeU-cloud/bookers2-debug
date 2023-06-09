@@ -1,1 +1,3 @@
 $(".book-comments").html("<%= j(render('books/book-comments', book: @book)) %>");
+window.bookCommentsData = <%= @daily_book_comments.values.reverse.to_json %>;
+window.initializeOrUpdateChart(window.bookCommentsData);

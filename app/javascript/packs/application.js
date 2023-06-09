@@ -15,6 +15,8 @@ import "../stylesheets/application";
 import Chart from 'chart.js/auto';
 import Raty from 'raty.js';
 
+window.Chart = Chart;
+
 // 今回、html.erbファイル内に<script></script>で直接Ratyを表示する想定のため、
 // Javascriptの読み込み順の問題で、この場所でRatyを初期化しておく必要がある
 window.raty = function(elem,opt) {

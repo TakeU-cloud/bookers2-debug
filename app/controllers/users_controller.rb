@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     else
       @books_count = 0
     end
-
+    
     respond_to do |format|
       format.html
       format.js
