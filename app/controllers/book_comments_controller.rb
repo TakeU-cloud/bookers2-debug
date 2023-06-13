@@ -7,12 +7,7 @@ class BookCommentsController < ApplicationController
     comment.book_id = @book.id
     comment.save
 
-    @today = Date.today
-    @daily_book_comments = (0..6).map do |days_ago|
-      date = @today - days_ago
-      comments_count = @book.book_comments.where(created_at: date.all_day).count
-      [date, comments_count]
-    end.to_h
+    @daily_book_comments = @book.daily_comments_count
 
     respond_to do |format|
       format.html {
@@ -27,12 +22,7 @@ class BookCommentsController < ApplicationController
     @book = book_comment.book
     book_comment.destroy
 
-    @today = Date.today
-    @daily_book_comments = (0..6).map do |days_ago|
-      date = @today - days_ago
-      comments_count = @book.book_comments.where(created_at: date.all_day).count
-      [date, comments_count]
-    end.to_h
+    @daily_book_comments = @book.daily_comments_count
 
     respond_to do |format|
       format.html {

@@ -40,7 +40,10 @@ window.initMap = function() {
 
       // InfoWindowを作成
       const infowindow = new google.maps.InfoWindow({
-        content: book.title // ここに表示する情報を設定
+        content: `<div style="padding: 10px;">
+                    <h6>${book.title}</h6>
+                    <img src="${book.user_profile_image_url}" style="width: 100px;" alt="${book.title}"/>
+                  </div>`
       });
 
       // マーカーにマウスオーバーイベントを追加

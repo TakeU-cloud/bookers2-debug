@@ -26,7 +26,11 @@ class User < ApplicationRecord
   validates :introduction, length: { maximum: 50 }
 
   def get_profile_image
-    (profile_image.attached?) ? profile_image : 'no_image.jpg'
+    if profile_image.attached?
+      Rails.application.routes.url_helpers.rails_blob_url(profile_image)
+    else
+      ActionController::Base.helpers.asset_path('no_image.jpg')
+    end
   end
 
   def follow(other_user)

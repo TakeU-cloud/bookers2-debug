@@ -27,10 +27,24 @@ class Book < ApplicationRecord
     Rails.application.routes.url_helpers.book_url(self, only_path: true)
   end
 
+  def user_profile_image_url
+    user.get_profile_image
+  end
+
   def self.nearby_books(latitude, longitude, distance_in_km = 1)
     if latitude.nil? || longitude.nil?
       return Book.none
     end
     where.not(latitude: nil, longitude: nil).near([latitude, longitude], distance_in_km)
+  end
+
+  def daily_comments_count(days_range = 0..6)
+    today = Date.today
+
+    days_range.map do |days_ago|
+      date = today - days_ago
+      comments_count = book_comments.where(created_at: date.all_day).count
+      [date, comments_count]
+    end.to_h
   end
 end

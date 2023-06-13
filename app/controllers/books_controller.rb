@@ -6,12 +6,7 @@ class BooksController < ApplicationController
     @book_comment = BookComment.new
     @book.update(views_count: @book.views_count + 1)
 
-    @today = Date.today
-    @daily_book_comments = (0..6).map do |days_ago|
-      date = @today - days_ago
-      comments_count = @book.book_comments.where(created_at: date.all_day).count
-      [date, comments_count]
-    end.to_h
+    @daily_book_comments = @book.daily_comments_count
   end
 
   def index
