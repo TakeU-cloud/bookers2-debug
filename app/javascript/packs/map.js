@@ -43,7 +43,8 @@ window.initMap = function() {
         content: `<div style="padding: 10px;">
                     <h6>${book.title}</h6>
                     <img src="${book.user_profile_image_url}" style="width: 100px;" alt="${book.title}"/>
-                  </div>`
+                  </div>`,
+        // disableAutoPan: true
       });
 
       // マーカーにマウスオーバーイベントを追加
