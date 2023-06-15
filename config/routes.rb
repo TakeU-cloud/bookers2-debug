@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   get "home/about"=>"homes#about"
   # devise関連のルーティングは、他のルーティングよりも前に記述する必要がある（競合を避けるため）
   # usersのdevise routes
-  devise_for :users
+  devise_for :users, controllers: {
+    # Twitterのomniauth認証を追加するためのルーティング
+    omniauth_callbacks: 'users/omniauth_callbacks',
+  }
   # userにゲストログイン機能を追加するためのルーティング
   devise_scope :user do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'

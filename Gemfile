@@ -70,4 +70,9 @@ gem "faraday"
 # geocoderを導入して、bookモデルに住所を追加する
 gem 'geocoder'
 
+# Twitter omniauth APIを使うためのgem
+# gem 'omniauth'
+gem "omniauth-rails_csrf_protection"
+gem 'omniauth-twitter'
+
 
