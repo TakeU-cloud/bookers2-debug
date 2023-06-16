@@ -21,8 +21,8 @@
     <div class="row justify-content-center">
       <% @movies.each do |movie| %>
         <div>
-          <img src="<%= movie[:poster_path] %>" alt="movie poster" style="width: 100px;">
-          <h6>タイトル： <%= movie[:title].truncate(10) %></h6>
+          <img src="<%= movie[:poster_path] %>" alt="movie poster" style="width: 120px;">
+          <h6><%= movie[:title].truncate(10) %></h6>
         </div>
       <% end %>
     </div>

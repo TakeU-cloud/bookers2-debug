@@ -45,7 +45,7 @@ class WeatherInfoController < ApplicationController
               poster_path: "https://image.tmdb.org/t/p/w500#{movie['poster_path']}"
             }
             count += 1
-            break if count == 3
+            break if count == 5
           end
         else
           @error_message = "API Error: #{data['message']}"
