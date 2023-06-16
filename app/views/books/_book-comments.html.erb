@@ -18,6 +18,9 @@
 
 <script>
 document.addEventListener('turbolinks:load', () => {
+  if (document.getElementById('myCommentsChart') === null || document.getElementById('myCommentsChart').dataset === null) {
+    return;
+  }
   const data = JSON.parse(document.getElementById('myCommentsChart').dataset.bookcomments);
   window.initializeOrUpdateChart(data);
 });
