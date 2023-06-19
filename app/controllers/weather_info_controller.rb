@@ -32,7 +32,7 @@ class WeatherInfoController < ApplicationController
       rescue Faraday::ClientError => e
         @error_message = "Client error: #{e.message}"
       end
-      # city_nameが入ったら、ついでにTMDBの映画のポスター画像3枚とタイトルを取得して、@moviesに格納する
+      # city_nameが入ったら、ついでにTMDBの映画のポスター画像5枚とタイトルを取得して、@moviesに格納する
       begin
         response = Faraday.get "https://api.themoviedb.org/3/movie/now_playing?api_key=#{api_key2}&language=ja&region=JP&page=1"
         data = JSON.parse(response.body)
