@@ -15,6 +15,7 @@
       <span> | </span>
       <%= link_to "いいね数順", { sort: 'like' }, { class: books_current_sort('like') } %>
       <%= render 'index', books: @books%>
+      <%= paginate @books %>
     </div>
   </div>
 </div>

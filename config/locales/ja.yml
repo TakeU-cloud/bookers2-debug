@@ -3,6 +3,7 @@ ja:
   activerecord:
     models:
       book: "本"
+      user: "ユーザー"
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

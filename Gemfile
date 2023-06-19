@@ -75,4 +75,6 @@ gem 'geocoder'
 gem "omniauth-rails_csrf_protection"
 gem 'omniauth-twitter'
 
+# pageinationのgem kaminari
+gem 'kaminari'
 

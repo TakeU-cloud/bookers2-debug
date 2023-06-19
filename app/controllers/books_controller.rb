@@ -16,15 +16,15 @@ class BooksController < ApplicationController
     session[:sort] = 'created_at' if session[:sort].blank?
     if session[:sort] == 'newest'
       @sort = 'created_at'
-      @books = Book.order(@sort => :desc).all
+      @books = Book.order(@sort => :desc).page(params[:page])
     elsif session[:sort] == 'highest'
       @sort = 'score'
-      @books = Book.order(@sort => :desc).all
+      @books = Book.order(@sort => :desc).page(params[:page])
     else
       @books = Book.left_joins(:favorites)
                    .select("books.*, SUM(CASE WHEN favorites.created_at BETWEEN '#{1.week.ago}' AND '#{Time.now}' THEN 1 ELSE 0 END) AS weekly_favorites_count")
                    .group('books.id')
-                   .order('weekly_favorites_count DESC')
+                   .order('weekly_favorites_count DESC').page(params[:page])
     end
     @nearby_books = Book.nearby_books(@book.latitude, @book.longitude)
   end
@@ -35,7 +35,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
-      @books = Book.all
+      @books = Book.page(params[:page])
       @nearby_books = Book.nearby_books(@book.latitude, @book.longitude)
       render 'index'
     end
