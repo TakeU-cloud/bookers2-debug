@@ -62,3 +62,4 @@ class WeatherInfoController < ApplicationController
     end
   end
 end
+
