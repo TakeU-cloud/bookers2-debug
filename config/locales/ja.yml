@@ -4,6 +4,21 @@ ja:
     models:
       book: "本"
       user: "ユーザー"
+    attributes:
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード(確認用)"
+        remember_me: "ログイン状態を保持する"
+        profile_image: "プロフィール画像"
+        introduction: "紹介文"
+      admin:
+        name: "名前"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード(確認用)"
+        remember_me: "ログイン状態を保持する"
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
