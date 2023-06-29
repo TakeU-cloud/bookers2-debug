@@ -10,7 +10,7 @@ import "channels";
 import "jquery";
 import "popper.js";
 import "bootstrap";
-import '@fortawesome/fontawesome-free/js/all';
+import '@fortawesome/fontawesome-free/css/all';
 import "../stylesheets/application";
 import Chart from 'chart.js/auto';
 import Raty from 'raty.js';
