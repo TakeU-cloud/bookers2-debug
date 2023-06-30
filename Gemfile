@@ -78,3 +78,5 @@ gem 'omniauth-twitter'
 # pageinationのgem kaminari
 gem 'kaminari'
 
+# wheneverを使うためのgem
+gem 'whenever', require: false

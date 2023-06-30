@@ -13,6 +13,9 @@ module Bookers2
 
     # I18nの設定
     config.i18n.default_locale = :ja
+
+    # バッチ処理の設定
+    config.paths.add 'lib', eager_load: true
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
